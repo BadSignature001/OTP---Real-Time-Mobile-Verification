@@ -1,0 +1,116 @@
+@charset "UTF-8";
+
+ body {
+      background: linear-gradient(to right, #FFFFFF, #a6c1ee);
+      padding-top: 50px;
+      
+    }
+
+    .container {
+      max-width: 500px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 700;
+      color: #007bff;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: #818486; /* Change to gray color */
+    }
+
+    .form-control {
+      border-radius: 5px;
+      padding: 12px;
+      border: 1px solid #ced4da;
+      color: gray; /* Change to gray color */
+    }
+
+    .form-control:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      border-color: #80bdff;
+    }
+
+    .btn-primary {
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-weight: 500;
+      background-color: #007bff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .register-form {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-form .form-control {
+      background-color: #f8f9fa;
+      border: none;
+      border-bottom: 2px solid #007bff;
+      border-radius: 0;
+      box-shadow: none;
+      padding-left: 0;
+    }
+
+    .register-form .form-control:focus {
+      border-color: #80bdff;
+      box-shadow: none;
+    }
+
+    .register-form .form-label {
+      color: #007bff;
+      font-weight: 600;
+    }
+
+    .register-form .btn-primary {
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      font-weight: 500;
+      padding: 10px 20px;
+      width: 100%;
+    }
+
+    .register-form .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .register-form .form-text {
+      color: #818486;
+    }
+
+    .register-form .register-link {
+      text-align: center;
+      margin-top: 20px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .register-form .register-link:hover {
+      text-decoration: underline;
+    }

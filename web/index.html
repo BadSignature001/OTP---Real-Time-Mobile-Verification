@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registration Page</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <div class="container" >
+            <div class="register-form" id = "sender">
+                <h2>Registration</h2>
+                <div>  
+                    <div class="form-group" >
+                        <label for="name" class="form-label" style ="color : gray ;">Name:</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label" style ="color : gray ;">Email:</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobile" class="form-label" style ="color : gray ;">Mobile:</label>
+                        <input type="tel" class ="form-control" id="mobile" required>
+                    </div>
+
+                    <div id="recaptcha-container"></div>
+
+
+                    <div class="form-group">
+                        <label for="rollno" class="form-label" style ="color : gray ;">Rollno:</label>
+                        <input type="text" class="form-control" id="rollno" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_password" class="form-label" style ="color : gray ;">Password:</label>
+                        <input type="password" class="form-control" id="password" required>
+                    </div>
+                    <button type="submit"  class="btn btn-primary"  onClick="phoneAuth()">Register</button>
+                    <p class="form-text text-center">Already have an account? <a href="signin.jsp" class="register-link">Login</a></p>
+                </div>
+            </div>
+
+
+            <!-- Confirmation Page -->
+
+            <div class="confirmation-message" id="verifier" style="display: none;">
+                <h2>Confirmation Code Sent</h2>
+                <p>A  confirmation code has been sent to your registered Mobile Number. Please check your SMS and enter the confirmation code below:</p>
+                <div >
+
+                    <div class="form-group" >
+                        <label for="confirmation_code" class="form-label" >Confirmation Code:</label>
+                        <input type="text" class="form-control" id="confirmation_code" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" onClick="codeverify()">Confirm</button>
+                    <div class="p-conf">Number Verified</div>
+                    <div class="n-conf">INCORRECT OTP</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth-compat.js"></script>
+
+        <script>
+
+
+                        const firebaseConfig = {
+                            apiKey: "AIzaSyB6fsJkTjwUJfpJhScwjXQCYD_LhuERHec",
+                            authDomain: "authenticationpage-7a11a.firebaseapp.com",
+                            projectId: "authenticationpage-7a11a",
+                            storageBucket: "authenticationpage-7a11a.appspot.com",
+                            messagingSenderId: "278327353527",
+                            appId: "1:278327353527:web:c56bbeb4e41120c446ed32",
+                            measurementId: "G-ZCB4DWSXV0"
+                        };
+                        firebase.initializeApp(firebaseConfig);
+
+                        render();
+
+                        function render() {
+                            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+                            recaptchaVerifier.render();
+                        }
+
+                        let coderesult;
+
+                        function phoneAuth() {
+                            var number = document.getElementById('mobile').value;
+                            firebase.auth().signInWithPhoneNumber(number, window.recaptchaVerifier).then(function (confirmationResult) {
+                                window.confirmationResult = confirmationResult;
+                                coderesult = confirmationResult;
+                                document.getElementById('sender').style.display = "none";
+                                document.getElementById('verifier').style.display = "block";
+
+                            }).catch(function (error) {
+
+                                alert(error.message);
+                            });
+                        }
+
+
+                        function codeverify() {
+                            var code = document.getElementById('confirmation_code').value;
+                            coderesult.confirm(code).then(function () {
+
+
+                                var name = document.getElementById('name').value;
+                                var email = document.getElementById('email').value;
+                                var mobile = document.getElementById('mobile').value;
+                                var rollno = document.getElementById('rollno').value;
+                                var password = document.getElementById('password').value;
+
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", "RegistrationServlet", true);
+                                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                xhr.onreadystatechange = function () {
+                                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                                        if (xhr.status === 200) {
+                                            debugger;
+                                            window.location.href = "signin.jsp";
+                                        } else {
+
+                                            console.error("Error: " + xhr.responseText);
+                                        }
+                                    }
+                                };
+                                var data = "name=" + encodeURIComponent(name) + "&email=" + encodeURIComponent(email) + "&mobile=" + encodeURIComponent(mobile) + "&rollno=" + encodeURIComponent(rollno) + "&password=" + encodeURIComponent(password);
+                                xhr.send(data);
+
+                            }).catch(function () {
+                                document.getElementsByClassName('p-conf')[0].style.display = 'none';
+                                document.getElementsByClassName('n-conf')[0].style.display = 'block';
+                            });
+                        }
+
+
+
+
+
+
+        </script>
+
+
+
+
+
+
+    </body>
+</html>
+
